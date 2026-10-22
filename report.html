@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cantonese Word: Report a Mistake</title>
+<style>
+  :root { --ink: #1d3557; --paper: #f2ebdd; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #ede0c8; --paper: #122438; } }
+  body { background: var(--paper); color: var(--ink); font: 17px/1.6 Georgia, "Iowan Old Style", serif;
+         max-width: 640px; margin: 0 auto; padding: 48px 16px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; }
+  a { color: inherit; }
+</style>
+<script>
+  // The app links here with ?word=…; this page forwards to the feedback form with the word
+  // pre-filled. To switch forms, change these two values only (no app update needed).
+  // FORM_URL: the form's "viewform" address. WORD_FIELD: the "entry.NNNN" id of the
+  // "Which word?" question, taken from the form's pre-filled link.
+  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd8IzXorcghT1aJRyHM0kXr7qphS00H9VGHWJ1d25zEZ3e-KA/viewform";
+  const WORD_FIELD = "entry.325168851";
+
+  const word = new URLSearchParams(location.search).get("word") || "";
+  if (FORM_URL) {
+    const target = new URL(FORM_URL);
+    if (WORD_FIELD && word) {
+      target.searchParams.set("usp", "pp_url");
+      target.searchParams.set(WORD_FIELD, word);
+    }
+    location.replace(target.toString());
+  }
+</script>
+</head>
+<body>
+<h1>Report a mistake</h1>
+<p id="msg">Opening the feedback form… If nothing happens,
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSd8IzXorcghT1aJRyHM0kXr7qphS00H9VGHWJ1d25zEZ3e-KA/viewform">open it here</a>.</p>
+<script>
+  if (word) document.getElementById("msg").insertAdjacentHTML("beforeend",
+    "<br><br>Word: <strong></strong>");
+  const s = document.querySelector("#msg strong"); if (s) s.textContent = word;
+</script>
+</body>
+</html>
